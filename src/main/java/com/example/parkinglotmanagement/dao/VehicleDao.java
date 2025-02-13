@@ -35,11 +35,19 @@ public class VehicleDao {
         if(vehicleList.isEmpty()){
             throw new ParkingLotException("Vehicle not found");
         }
-        return vehicleList.get(vehicleList.size()-1);
+        Vehicle vehicle = vehicleList.get(vehicleList.size()-1);
+        vehicleRepository.delete(vehicle);
+        return vehicle;
     }
 
     public void makeSpotAvailable(Spot spot) {
         spot.setAvailable(true);
         spotRepository.save(spot);
+    }
+
+    public void checkVehicleNumber(String vehicleNumber) {
+        if(!vehicleRepository.findVehicleByVehicleNumber(vehicleNumber).isEmpty()) {
+            throw new ParkingLotException("Enter correct vehicle number");
+        };
     }
 }

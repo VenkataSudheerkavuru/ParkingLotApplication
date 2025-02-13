@@ -23,4 +23,9 @@ public class VehicleServiceImpl implements VehicleService {
     public Vehicle leaveParking(String vehicleNumber) {
         return vehicleDao.findByVehicleNumber(vehicleNumber);
     }
+
+    @Override
+    public void checkVehicleNumber(VehicleDto vehicleDto) {
+        vehicleDao.checkVehicleNumber(vehicleDto.getVehicleNumber());
+    }
 }

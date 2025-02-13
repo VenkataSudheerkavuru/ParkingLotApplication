@@ -28,7 +28,7 @@ public class ParkingLotDao {
     public void checkParkingLotName(String parkingLotName) {
         if(parkingLotRepository.findByParkingLotName(parkingLotName)!=null) {
             throw new ParkingLotException("Parking lot name already exists");
-        };
+        }
     }
 
     public ParkingLot getSavedParkingLot(int numberOflevels, ParkingLot parkingLot, String parkingLotName) {

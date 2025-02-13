@@ -40,6 +40,7 @@ public class SpotServiceImpl implements SpotService {
 
     @Override
     public void parkVehicle(Spot spot, VehicleDto vehicleDto) {
+        vehicleService.checkVehicleNumber(vehicleDto);
         spotDao.parkVehicle(spot,vehicleDto);
         vehicleService.saveVehicle(spot,vehicleDto);
     }

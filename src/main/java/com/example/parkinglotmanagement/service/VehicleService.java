@@ -8,4 +8,6 @@ public interface VehicleService {
     void saveVehicle(Spot spot, VehicleDto vehicleDto);
 
     Vehicle leaveParking(String vehicleNumber);
+
+    void checkVehicleNumber(VehicleDto vehicleDto);
 }
