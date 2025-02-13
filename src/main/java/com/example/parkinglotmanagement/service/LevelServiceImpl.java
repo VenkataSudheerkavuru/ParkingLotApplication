@@ -6,6 +6,7 @@ import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.Level;
 import com.example.parkinglotmanagement.entities.ParkingLot;
 import com.example.parkinglotmanagement.entities.Spot;
+import com.example.parkinglotmanagement.exception.ParkingLotException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,12 +46,17 @@ public class LevelServiceImpl implements LevelService {
         List<Level> levels = levelDao.getLevelsByParkingLotId(parkingLotId);
         String vehicleType = vehicleDto.getVehicleType();
         for(Level level : levels) {
-            Optional<Spot> availableSpot = spotService.findAvailbleSpot(level,vehicleType);
-            if(availableSpot.isPresent()) {
-                spotService.parkVehicle(availableSpot.get(),vehicleDto);
+            Spot availableSpot = spotService.findAvailbleSpot(level,vehicleType);
+            if(availableSpot!=null) {
+                spotService.parkVehicle(availableSpot,vehicleDto);
                 return;
             }
         }
-        throw new RuntimeException("No available Spot found for the vehicle type " + vehicleType);
+        throw new ParkingLotException("No available Spot found for the vehicle type " + vehicleType);
+    }
+
+    @Override
+    public Double leaveParking(String vehicleNumber, CalculateFee calculateFee) {
+        return spotService.leaveParking(vehicleNumber,calculateFee);
     }
 }

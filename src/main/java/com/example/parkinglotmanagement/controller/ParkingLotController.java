@@ -29,9 +29,9 @@ public class ParkingLotController {
         return new ResponseEntity<>("Parking Successful", HttpStatus.OK);
     }
 
-    @PostMapping("/{parkingLotId}/leaveParking/{vehicleNumber}")
-    public ResponseEntity<String> leaveParking(@PathVariable Long parkingLotId, @PathVariable String vehicleNumber) {
-        parkingLotService.leaveParking(parkingLotId, vehicleNumber);
-        return new ResponseEntity<>("Vehicle Left Parking", HttpStatus.OK);
+    @PostMapping("/leaveParking/{vehicleNumber}")
+    public ResponseEntity<String> leaveParking(@PathVariable String vehicleNumber) {
+        Double parkingFee=parkingLotService.leaveParking(vehicleNumber);
+        return new ResponseEntity<>("Please pay "+ parkingFee +" to leave the parking", HttpStatus.OK);
     }
 }

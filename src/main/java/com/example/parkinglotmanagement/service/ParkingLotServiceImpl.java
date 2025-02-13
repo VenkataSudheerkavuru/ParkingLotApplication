@@ -13,10 +13,12 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
     private final LevelService levelService;
     private final ParkingLotDao parkingLotDao;
+    private final CalculateFee calculateFee;
 
-    ParkingLotServiceImpl(LevelService levelService, ParkingLotDao parkingLotDao) {
+    ParkingLotServiceImpl(LevelService levelService, ParkingLotDao parkingLotDao, CalculateFee calculateFee) {
         this.levelService = levelService;
         this.parkingLotDao = parkingLotDao;
+        this.calculateFee = calculateFee;
     }
 
     @Override
@@ -36,8 +38,8 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     }
 
     @Override
-    public void leaveParking(Long parkingLotId, String vehicleNumber) {
-
+    public Double leaveParking( String vehicleNumber) {
+        return levelService.leaveParking(vehicleNumber,calculateFee);
     }
 
 

@@ -9,5 +9,5 @@ public interface ParkingLotService {
 
     void parkVehicle(Long parkingLotId, VehicleDto vehicleDto);
 
-    void leaveParking(Long parkingLotId, String vehicleNumber);
+    Double leaveParking( String vehicleNumber);
 }

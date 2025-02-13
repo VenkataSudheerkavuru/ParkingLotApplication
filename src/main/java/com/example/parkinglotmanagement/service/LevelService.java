@@ -11,4 +11,6 @@ public interface LevelService {
     void addLelesToParkingLot(ParkingLot parkingLot, int numberOfLevels);
 
     void parkVehicleAtLevel(Long parkingLotId, VehicleDto vehicleDto);
+
+    Double leaveParking(String vehicleNumber, CalculateFee calculateFee);
 }

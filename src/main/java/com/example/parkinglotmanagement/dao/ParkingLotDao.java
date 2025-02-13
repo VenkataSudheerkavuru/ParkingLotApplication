@@ -2,6 +2,7 @@ package com.example.parkinglotmanagement.dao;
 
 import com.example.parkinglotmanagement.dto.ParkingLotDto;
 import com.example.parkinglotmanagement.entities.ParkingLot;
+import com.example.parkinglotmanagement.exception.ParkingLotException;
 import com.example.parkinglotmanagement.repository.ParkingLotRepository;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +21,13 @@ public class ParkingLotDao {
         if(parkingLot.isPresent()){
             return parkingLot.get();
         }else{
-            throw new RuntimeException("Parking lot doesn't exists");
+            throw new ParkingLotException("Parking lot doesn't exists");
         }
     }
 
     public void checkParkingLotName(String parkingLotName) {
         if(parkingLotRepository.findByParkingLotName(parkingLotName)!=null) {
-            throw new RuntimeException("Parking lot name already exists");
+            throw new ParkingLotException("Parking lot name already exists");
         };
     }
 

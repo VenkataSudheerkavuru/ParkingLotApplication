@@ -3,16 +3,23 @@ package com.example.parkinglotmanagement.dao;
 import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.Spot;
 import com.example.parkinglotmanagement.entities.Vehicle;
+import com.example.parkinglotmanagement.exception.ParkingLotException;
+import com.example.parkinglotmanagement.repository.SpotRepository;
 import com.example.parkinglotmanagement.repository.VehicleRepository;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class VehicleDao {
 
     private final VehicleRepository vehicleRepository;
+    private final SpotRepository spotRepository;
 
-    VehicleDao(VehicleRepository vehicleRepository) {
+    VehicleDao(VehicleRepository vehicleRepository, SpotRepository spotRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.spotRepository = spotRepository;
     }
 
     public void saveVehicle(Spot spot, VehicleDto vehicleDto) {
@@ -21,5 +28,18 @@ public class VehicleDao {
         vehicle.setVehicleNumber(vehicleDto.getVehicleNumber());
         vehicle.setSpot(spot);
         vehicleRepository.save(vehicle);
+    }
+
+    public Vehicle findByVehicleNumber(String vehicleNumber) {
+        List<Vehicle> vehicleList = vehicleRepository.findVehicleByVehicleNumber(vehicleNumber);
+        if(vehicleList.isEmpty()){
+            throw new ParkingLotException("Vehicle not found");
+        }
+        return vehicleList.get(vehicleList.size()-1);
+    }
+
+    public void makeSpotAvailable(Spot spot) {
+        spot.setAvailable(true);
+        spotRepository.save(spot);
     }
 }

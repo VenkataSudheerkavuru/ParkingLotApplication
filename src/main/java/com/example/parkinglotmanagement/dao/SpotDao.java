@@ -7,6 +7,7 @@ import com.example.parkinglotmanagement.repository.SpotRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -24,8 +25,12 @@ public class SpotDao {
         spotRepository.save(spot);
     }
 
-    public Optional<Spot> findAvailbleSpot(Long levelId, String vehicleType) {
-        return spotRepository.findSpotByLevelAndVehicleTypeAndAvailable(levelId,vehicleType);
+    public Spot findAvailbleSpot(Long levelId, String vehicleType) {
+        List<Spot> spotList = spotRepository.findSpotByLevelAndVehicleTypeAndAvailable(levelId,vehicleType);
+        if (spotList.isEmpty()) {
+            return null;
+        }
+        return spotList.stream().findFirst().get();
     }
 
     public void parkVehicle(Spot spot, VehicleDto vehicleDto) {

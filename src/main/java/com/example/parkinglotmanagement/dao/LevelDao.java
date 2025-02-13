@@ -2,6 +2,7 @@ package com.example.parkinglotmanagement.dao;
 
 import com.example.parkinglotmanagement.entities.Level;
 import com.example.parkinglotmanagement.entities.ParkingLot;
+import com.example.parkinglotmanagement.exception.ParkingLotException;
 import com.example.parkinglotmanagement.repository.LevelRepository;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class LevelDao {
         if (levelList != null && !levelList.isEmpty()) {
             return levelList;
         }
-        throw new RuntimeException("No parking lot with given id.");
+        throw new ParkingLotException("No parking lot with given id.");
     }
 
     public void saveLevel(ParkingLot parkingLot, Level level, int i) {
