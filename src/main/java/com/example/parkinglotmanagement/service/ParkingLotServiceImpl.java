@@ -1,6 +1,7 @@
 package com.example.parkinglotmanagement.service;
 
 
+import com.example.parkinglotmanagement.dao.ParkingLotDao;
 import com.example.parkinglotmanagement.dto.ParkingLotDto;
 import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.ParkingLot;
@@ -10,25 +11,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class ParkingLotServiceImpl implements ParkingLotService {
 
-    private final ParkingLotRepository parkingLotRepository;
     private final LevelService levelService;
+    private final ParkingLotDao parkingLotDao;
 
-    ParkingLotServiceImpl(ParkingLotRepository parkingLotRepository,LevelService levelService) {
-        this.parkingLotRepository = parkingLotRepository;
+    ParkingLotServiceImpl(LevelService levelService, ParkingLotDao parkingLotDao) {
         this.levelService = levelService;
+        this.parkingLotDao = parkingLotDao;
     }
 
     @Override
     public void createParkingLot(ParkingLotDto parkingLotDto) {
         ParkingLot parkingLot = new ParkingLot();
-        parkingLot.setParkingLotName(parkingLotDto.getParkingLotName());
-        parkingLot.setTotalLevels(parkingLotDto.getNumberOfLevels());
-        ParkingLot savedParkingLot = parkingLotRepository.save(parkingLot);
-        levelService.addLelesToParkingLot(savedParkingLot.getParkingLotId(),parkingLotDto.getNumberOfLevels());
+        String parkingLotName = parkingLotDto.getParkingLotName();
+        int numberOfLevels = parkingLotDto.getNumberOfLevels();
+        parkingLotDao.checkParkingLotName(parkingLotName);
+        ParkingLot savedParkingLot = parkingLotDao.getSavedParkingLot(numberOfLevels, parkingLot, parkingLotName);
+        levelService.addLelesToParkingLot(savedParkingLot, numberOfLevels);
     }
+
 
     @Override
     public void parkVehicle(Long parkingLotId, VehicleDto vehicleDto) {
+        levelService.parkVehicleAtLevel(parkingLotId,vehicleDto);
     }
 
     @Override

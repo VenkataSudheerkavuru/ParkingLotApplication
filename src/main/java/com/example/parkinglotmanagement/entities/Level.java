@@ -18,7 +18,4 @@ public class Level {
     @ManyToOne
     @JoinColumn(name = "parking_lot_id")
     private ParkingLot parkingLot;
-
-    @OneToMany(mappedBy = "level", cascade = CascadeType.ALL)
-    private List<Spot> spots;
 }

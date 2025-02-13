@@ -1,9 +1,14 @@
 package com.example.parkinglotmanagement.service;
 
 import com.example.parkinglotmanagement.dto.SpotDto;
+import com.example.parkinglotmanagement.dto.VehicleDto;
+import com.example.parkinglotmanagement.entities.ParkingLot;
 
 public interface LevelService {
-    void addSpotsToLevel(long levelId, SpotDto spotDto);
 
-    void addLelesToParkingLot(Long parkingLotId, int numberOfLevels);
+    void addSpotsToLevels(Long parkingLotId, SpotDto spotDto);
+
+    void addLelesToParkingLot(ParkingLot parkingLot, int numberOfLevels);
+
+    void parkVehicleAtLevel(Long parkingLotId, VehicleDto vehicleDto);
 }

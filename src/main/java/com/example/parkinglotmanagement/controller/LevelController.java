@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/level")
+@RequestMapping("/api/level")
 public class LevelController {
 
     private final LevelService levelService;
@@ -18,9 +18,9 @@ public class LevelController {
         this.levelService = levelService;
     }
 
-    @PostMapping("/{levelId}/spots")
-    public ResponseEntity<String> addSpotsToLevel(@PathVariable long levelId,
+    @PostMapping("/{parkingLotId}/spots")
+    public ResponseEntity<String> addSpotsToLevels(@PathVariable Long parkingLotId,
                                                   @RequestBody SpotDto spotDto) {
-        levelService.addSpotsToLevel(levelId,spotDto);
+        levelService.addSpotsToLevels(parkingLotId,spotDto);
         return new ResponseEntity<>("Spots added to the levels", HttpStatus.OK);    }
 }

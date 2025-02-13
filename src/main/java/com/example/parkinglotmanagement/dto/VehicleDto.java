@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 public class VehicleDto {
 
-    private long parkinglotId;
-
     private  String vehicleNumber;
 
     private String vehicleType;
