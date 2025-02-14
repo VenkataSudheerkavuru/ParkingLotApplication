@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "d772546b-8151-4cc4-98fd-34c2969b77e4",
+		"name": "ParkingLot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42151048"
+	},
+	"item": [
+		{
+			"name": "createParkingLot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"parkingLotName\":\"olampia\",\r\n    \"numberOfLevels\": 5 ,\r\n     \"numberOfSpots\" :{\r\n        \"CAR\":2,\r\n        \"BIKE\":2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/parkingLot/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"parkingLot",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parkvehicle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vehicleNumber\": \"ABC123R\",\r\n    \"vehicleType\": \"CAR\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/parkingLot/1/parkVehicle",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"parkingLot",
+						"1",
+						"parkVehicle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "leaveParking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/parkingLot/leaveParking/ABC123R",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"parkingLot",
+						"leaveParking",
+						"ABC123R"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllSpots",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/parkingLot/1/getAllSpots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"parkingLot",
+						"1",
+						"getAllSpots"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -24,5 +24,9 @@ public class Spot {
     @ManyToOne
     @JoinColumn(name = "level_id")
     private Level level;
+
+    @OneToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
    
 }

@@ -1,10 +1,15 @@
 package com.example.parkinglotmanagement.service;
+
 import com.example.parkinglotmanagement.dao.SpotDao;
+import com.example.parkinglotmanagement.dto.SpotDto;
 import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.Level;
 import com.example.parkinglotmanagement.entities.Spot;
 import com.example.parkinglotmanagement.entities.Vehicle;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +34,7 @@ public class SpotServiceImpl implements SpotService {
     public void addSpotsToLevels(Level level, Map<String, Integer> spotsPerVehicle) {
         spotsPerVehicle.forEach((vehicleType, spots) -> {
             for (int i = 1; i <= spots; i++) {
-                Spot spot= new Spot();
+                Spot spot = new Spot();
                 spotDao.addSpotToLevel(level, vehicleType, spot, i);
             }
         });
@@ -40,7 +45,7 @@ public class SpotServiceImpl implements SpotService {
      */
     @Override
     public Spot findAvailbleSpot(Level level, String vehicleType) {
-        return spotDao.findAvailbleSpot(level.getLevelId(),vehicleType);
+        return spotDao.findAvailbleSpot(level.getLevelId(), vehicleType);
     }
 
     /**
@@ -50,8 +55,8 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public void parkVehicle(Spot spot, VehicleDto vehicleDto) {
         Vehicle vehicle = vehicleService.checkVehicleNumber(vehicleDto);
-        spotDao.parkVehicle(spot,vehicleDto);
-        vehicleService.saveVehicle(spot,vehicleDto,vehicle);
+        vehicle =vehicleService.saveVehicle(spot, vehicleDto, vehicle);
+        spotDao.parkVehicle(spot, vehicleDto , vehicle);
     }
 
     /**
@@ -61,7 +66,18 @@ public class SpotServiceImpl implements SpotService {
     public Double leaveParking(String vehicleNumber, CalculateFee calculateFee) {
         Vehicle vehicle = vehicleService.leaveParking(vehicleNumber);
         Spot spot = vehicle.getSpot();
+        LocalDateTime enteredTime = spot.getEnteredTime();
         spotDao.makeSpotAvailable(spot);
-        return calculateFee.calculateParkingFee(vehicle.getVehicleType(),spot.getEnteredTime());
+        return calculateFee.calculateParkingFee(vehicle.getVehicleType(), enteredTime);
+    }
+
+    @Override
+    public List<SpotDto> getSpotsByLevel(Long levelId) {
+        List<Spot> spots = spotDao.getSpotsByLevelId(levelId);
+        return spots.stream().map(spot -> convertToDto(spot)).toList();
+    }
+
+    private SpotDto convertToDto(Spot spot) {
+        return new SpotDto(spot.getSpotId(), spot.getSpotNumber(), spot.getVehicleType(), spot.isAvailable(), spot.getVehicle() != null ? spot.getVehicle().getVehicleNumber() : null);
     }
 }

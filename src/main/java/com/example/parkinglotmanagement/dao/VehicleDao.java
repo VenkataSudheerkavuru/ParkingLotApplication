@@ -25,7 +25,7 @@ public class VehicleDao {
     /**
      * saving the vehicle info in vehicle class along with spot occupied
      */
-    public void saveVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle) {
+    public Vehicle saveVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle) {
         if(vehicle == null) {
             vehicle = new Vehicle();
         }
@@ -34,7 +34,8 @@ public class VehicleDao {
         vehicle.setVehicleEnteredTime(LocalDateTime.now());
         vehicle.setVehicleLeftTime(null);
         vehicle.setSpot(spot);
-        vehicleRepository.save(vehicle);
+        vehicle.setIsParked(true);
+        return vehicleRepository.save(vehicle);
     }
 
     /**
@@ -43,7 +44,7 @@ public class VehicleDao {
      */
     public Vehicle findByVehicleNumber(String vehicleNumber) {
         Optional<Vehicle> vehicle = vehicleRepository.findVehicleByVehicleNumber(vehicleNumber);
-        if (vehicle.isPresent()) {
+        if (vehicle.isPresent() && vehicle.get().getIsParked()) {
             return vehicle.get();
         }
         throw new ParkingLotException("Vehicle not found");
@@ -54,6 +55,18 @@ public class VehicleDao {
      */
     public Vehicle checkVehicleNumber(String vehicleNumber) {
         Optional<Vehicle> vehicle = vehicleRepository.findVehicleByVehicleNumber(vehicleNumber);
-        return vehicle.orElse(null);
+        if (vehicle.isPresent())
+            if(vehicle.get().getIsParked()) {
+                throw new ParkingLotException("Please verify vehicle number");
+            }else{
+                return vehicle.get();
+        }
+        return null;
+    }
+
+    public void saveVehicle(Vehicle vehicle) {
+        vehicle.setVehicleLeftTime(LocalDateTime.now());
+        vehicle.setIsParked(false);
+        vehicleRepository.save(vehicle);
     }
 }

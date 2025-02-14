@@ -1,12 +1,15 @@
 package com.example.parkinglotmanagement.service;
 
 import com.example.parkinglotmanagement.dao.LevelDao;
+import com.example.parkinglotmanagement.dto.SpotDto;
 import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.Level;
 import com.example.parkinglotmanagement.entities.ParkingLot;
 import com.example.parkinglotmanagement.entities.Spot;
 import com.example.parkinglotmanagement.exception.ParkingLotException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -72,5 +75,16 @@ public class LevelServiceImpl implements LevelService {
     @Override
     public Double leaveParking(String vehicleNumber, CalculateFee calculateFee) {
         return spotService.leaveParking(vehicleNumber,calculateFee);
+    }
+
+    @Override
+    public List<SpotDto> getAllParkingLots(Long parkingLotId) {
+        List<Level> levels = levelDao.getLevelsByParkingLotId(parkingLotId);
+        List<SpotDto> spotDtos = new ArrayList<>();
+        for(Level level : levels) {
+            List<SpotDto> spotsInLevel = spotService.getSpotsByLevel(level.getLevelId());
+            spotDtos.addAll(spotsInLevel);
+        }
+        return spotDtos;
     }
 }

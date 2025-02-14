@@ -3,6 +3,7 @@ package com.example.parkinglotmanagement.dao;
 import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.Level;
 import com.example.parkinglotmanagement.entities.Spot;
+import com.example.parkinglotmanagement.entities.Vehicle;
 import com.example.parkinglotmanagement.repository.SpotRepository;
 import org.springframework.stereotype.Component;
 
@@ -49,10 +50,11 @@ public class SpotDao {
     /**
      * parking the vehicle in the available spot by saving it in the database
      */
-    public void parkVehicle(Spot spot, VehicleDto vehicleDto) {
+    public void parkVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle) {
         spot.setAvailable(false);
         spot.setEnteredTime(LocalDateTime.now());
         spot.setVehicleType(vehicleDto.getVehicleType());
+        spot.setVehicle(vehicle);
         spotRepository.save(spot);
     }
 
@@ -62,6 +64,11 @@ public class SpotDao {
     public void makeSpotAvailable(Spot spot) {
         spot.setAvailable(true);
         spot.setEnteredTime(null);
+        spot.setVehicle(null);
         spotRepository.save(spot);
+    }
+
+    public List<Spot> getSpotsByLevelId(Long levelId) {
+        return spotRepository.findSpotsByLevel_LevelId(levelId);
     }
 }

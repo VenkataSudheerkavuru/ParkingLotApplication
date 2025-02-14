@@ -5,7 +5,7 @@ import com.example.parkinglotmanagement.entities.Spot;
 import com.example.parkinglotmanagement.entities.Vehicle;
 
 public interface VehicleService {
-    void saveVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle);
+    Vehicle saveVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle);
 
     Vehicle leaveParking(String vehicleNumber);
 

@@ -1,11 +1,12 @@
 package com.example.parkinglotmanagement.controller;
 
-import com.example.parkinglotmanagement.dto.ParkingLotDto;
-import com.example.parkinglotmanagement.dto.VehicleDto;
+import com.example.parkinglotmanagement.dto.*;
 import com.example.parkinglotmanagement.service.ParkingLotService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * controller class
@@ -25,9 +26,10 @@ public class ParkingLotController {
      * @param parkingLotDto contains number of levels and lot name
      */
     @PostMapping("/create")
-    public ResponseEntity<String> createParkingLot(@RequestBody ParkingLotDto parkingLotDto) {
+    public ResponseEntity<CreateParkingLotResponse> createParkingLot(@RequestBody ParkingLotDto parkingLotDto) {
         parkingLotService.createParkingLot(parkingLotDto);
-        return new ResponseEntity<>("Parking lot created", HttpStatus.CREATED);
+        CreateParkingLotResponse createParkingLotResponse = new CreateParkingLotResponse("Parking lot created");
+        return new ResponseEntity<>(createParkingLotResponse, HttpStatus.CREATED);
     }
 
     /**
@@ -36,9 +38,10 @@ public class ParkingLotController {
      * @param vehicleDto vehicle information
      */
     @PostMapping("/{parkingLotId}/parkVehicle")
-    public ResponseEntity<String> parkVehicle(@PathVariable Long parkingLotId, @RequestBody VehicleDto vehicleDto) {
+    public ResponseEntity<ParkingResponse> parkVehicle(@PathVariable Long parkingLotId, @RequestBody VehicleDto vehicleDto) {
         parkingLotService.parkVehicle(parkingLotId, vehicleDto);
-        return new ResponseEntity<>("Parking Successful", HttpStatus.OK);
+        ParkingResponse parkingResponse = new ParkingResponse("Parking Successful");
+        return new ResponseEntity<>(parkingResponse, HttpStatus.OK);
     }
 
     /**
@@ -46,8 +49,15 @@ public class ParkingLotController {
      * @param vehicleNumber of vehicle that want to leave parking
      */
     @PostMapping("/leaveParking/{vehicleNumber}")
-    public ResponseEntity<String> leaveParking(@PathVariable String vehicleNumber) {
+    public ResponseEntity<LeavingResponse> leaveParking(@PathVariable String vehicleNumber) {
         Double parkingFee=parkingLotService.leaveParking(vehicleNumber);
-        return new ResponseEntity<>("Please pay "+ parkingFee +" to leave the parking", HttpStatus.OK);
+        LeavingResponse leavingResponse = new LeavingResponse("Please pay "+ parkingFee +" to leave the parking");
+        return new ResponseEntity<>(leavingResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/{parkingLotId}/getAllSpots")
+    public ResponseEntity<List<SpotDto>> getAllParkingLots(@PathVariable Long parkingLotId) {
+        List<SpotDto> spots = parkingLotService.getAllParkingLots(parkingLotId);
+        return new ResponseEntity<>(spots, HttpStatus.OK);
     }
 }

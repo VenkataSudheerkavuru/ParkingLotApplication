@@ -1,8 +1,10 @@
 package com.example.parkinglotmanagement.service;
 
+import com.example.parkinglotmanagement.dto.SpotDto;
 import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.ParkingLot;
 
+import java.util.List;
 import java.util.Map;
 
 public interface LevelService {
@@ -14,4 +16,6 @@ public interface LevelService {
     void parkVehicleAtLevel(Long parkingLotId, VehicleDto vehicleDto);
 
     Double leaveParking(String vehicleNumber, CalculateFee calculateFee);
+
+    List<SpotDto> getAllParkingLots(Long parkingLotId);
 }

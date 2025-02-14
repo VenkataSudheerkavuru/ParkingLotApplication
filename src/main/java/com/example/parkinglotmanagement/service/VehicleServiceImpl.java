@@ -18,8 +18,8 @@ public class VehicleServiceImpl implements VehicleService {
      * saving vehicle in database
      */
     @Override
-    public void saveVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle) {
-        vehicleDao.saveVehicle(spot,vehicleDto,vehicle);
+    public Vehicle saveVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle) {
+        return vehicleDao.saveVehicle(spot,vehicleDto,vehicle);
     }
 
     /**
@@ -27,7 +27,9 @@ public class VehicleServiceImpl implements VehicleService {
      */
     @Override
     public Vehicle leaveParking(String vehicleNumber) {
-        return vehicleDao.findByVehicleNumber(vehicleNumber);
+        Vehicle vehicle = vehicleDao.findByVehicleNumber(vehicleNumber);
+        vehicleDao.saveVehicle(vehicle);
+        return vehicle;
     }
 
     /**

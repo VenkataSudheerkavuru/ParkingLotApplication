@@ -1,10 +1,12 @@
 package com.example.parkinglotmanagement.service;
 import com.example.parkinglotmanagement.dao.ParkingLotDao;
 import com.example.parkinglotmanagement.dto.ParkingLotDto;
+import com.example.parkinglotmanagement.dto.SpotDto;
 import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.ParkingLot;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +53,11 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     @Override
     public Double leaveParking(String vehicleNumber) {
         return levelService.leaveParking(vehicleNumber,calculateFee);
+    }
+
+    @Override
+    public List<SpotDto> getAllParkingLots(Long parkingLotId) {
+        return levelService.getAllParkingLots(parkingLotId);
     }
 
 

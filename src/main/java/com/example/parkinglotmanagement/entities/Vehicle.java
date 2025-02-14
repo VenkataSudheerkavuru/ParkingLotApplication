@@ -21,6 +21,8 @@ public class Vehicle {
 
     private LocalDateTime vehicleLeftTime;
 
+    private Boolean isParked;
+
     @OneToOne
     @JoinColumn(name = "spot_id")
     private Spot spot;
