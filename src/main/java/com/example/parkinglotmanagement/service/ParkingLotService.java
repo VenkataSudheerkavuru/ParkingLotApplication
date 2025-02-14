@@ -14,5 +14,5 @@ public interface ParkingLotService {
 
     Double leaveParking( String vehicleNumber);
 
-    List<SpotDto> getAllParkingLots(Long parkingLotId);
+    List<SpotDto> getAllParkingSpots(Long parkingLotId);
 }

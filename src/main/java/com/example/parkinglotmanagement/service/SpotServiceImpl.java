@@ -71,12 +71,18 @@ public class SpotServiceImpl implements SpotService {
         return calculateFee.calculateParkingFee(vehicle.getVehicleType(), enteredTime);
     }
 
+    /**
+     * returning list of spotDto Class
+     */
     @Override
     public List<SpotDto> getSpotsByLevel(Long levelId) {
         List<Spot> spots = spotDao.getSpotsByLevelId(levelId);
         return spots.stream().map(spot -> convertToDto(spot)).toList();
     }
 
+    /**
+     * converting spot class to spot dto class
+     */
     private SpotDto convertToDto(Spot spot) {
         return new SpotDto(spot.getSpotId(), spot.getSpotNumber(), spot.getVehicleType(), spot.isAvailable(), spot.getVehicle() != null ? spot.getVehicle().getVehicleNumber() : null);
     }

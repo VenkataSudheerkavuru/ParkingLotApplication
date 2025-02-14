@@ -77,8 +77,11 @@ public class LevelServiceImpl implements LevelService {
         return spotService.leaveParking(vehicleNumber,calculateFee);
     }
 
+    /**
+     * Get all parking spots for each level and convert it to spot dto class and return
+     */
     @Override
-    public List<SpotDto> getAllParkingLots(Long parkingLotId) {
+    public List<SpotDto> getAllParkingSpots(Long parkingLotId) {
         List<Level> levels = levelDao.getLevelsByParkingLotId(parkingLotId);
         List<SpotDto> spotDtos = new ArrayList<>();
         for(Level level : levels) {

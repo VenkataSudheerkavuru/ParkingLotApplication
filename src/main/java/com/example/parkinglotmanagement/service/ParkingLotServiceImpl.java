@@ -55,9 +55,12 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         return levelService.leaveParking(vehicleNumber,calculateFee);
     }
 
+    /**
+     * Getting all parking Spots
+     */
     @Override
-    public List<SpotDto> getAllParkingLots(Long parkingLotId) {
-        return levelService.getAllParkingLots(parkingLotId);
+    public List<SpotDto> getAllParkingSpots(Long parkingLotId) {
+        return levelService.getAllParkingSpots(parkingLotId);
     }
 
 

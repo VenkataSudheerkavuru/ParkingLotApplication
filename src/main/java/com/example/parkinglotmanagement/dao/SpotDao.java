@@ -68,6 +68,9 @@ public class SpotDao {
         spotRepository.save(spot);
     }
 
+    /**
+     * getting all spots by level id
+     */
     public List<Spot> getSpotsByLevelId(Long levelId) {
         return spotRepository.findSpotsByLevel_LevelId(levelId);
     }

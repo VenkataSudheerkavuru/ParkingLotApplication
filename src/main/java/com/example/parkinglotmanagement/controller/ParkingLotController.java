@@ -55,9 +55,12 @@ public class ParkingLotController {
         return new ResponseEntity<>(leavingResponse, HttpStatus.OK);
     }
 
+    /**
+     * Getting all parking spots
+     */
     @GetMapping("/{parkingLotId}/getAllSpots")
-    public ResponseEntity<List<SpotDto>> getAllParkingLots(@PathVariable Long parkingLotId) {
-        List<SpotDto> spots = parkingLotService.getAllParkingLots(parkingLotId);
+    public ResponseEntity<List<SpotDto>> getAllParkingSpots(@PathVariable Long parkingLotId) {
+        List<SpotDto> spots = parkingLotService.getAllParkingSpots(parkingLotId);
         return new ResponseEntity<>(spots, HttpStatus.OK);
     }
 }

@@ -17,5 +17,5 @@ public interface LevelService {
 
     Double leaveParking(String vehicleNumber, CalculateFee calculateFee);
 
-    List<SpotDto> getAllParkingLots(Long parkingLotId);
+    List<SpotDto> getAllParkingSpots(Long parkingLotId);
 }
