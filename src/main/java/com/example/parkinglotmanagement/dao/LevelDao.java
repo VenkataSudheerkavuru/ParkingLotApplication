@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Dao operations for level class
+ */
 @Component
 public class LevelDao {
     private final LevelRepository levelRepository;
@@ -16,6 +19,11 @@ public class LevelDao {
         this.levelRepository = levelRepository;
     }
 
+    /**
+     * Getting levels for a particular lot
+     * @param parkingLotId levels of which parking lot
+     * @return list of levels
+     */
     public List<Level> getLevelsByParkingLotId(Long parkingLotId) {
         List<Level> levelList = levelRepository.findByParkingLotId(parkingLotId);
         if (levelList != null && !levelList.isEmpty()) {
@@ -24,6 +32,12 @@ public class LevelDao {
         throw new ParkingLotException("No parking lot with given id.");
     }
 
+    /**
+     * saving level to level database
+     * @param parkingLot parkingLot class
+     * @param level level class
+     * @param i level number
+     */
     public void saveLevel(ParkingLot parkingLot, Level level, int i) {
         level.setParkingLot(parkingLot);
         level.setLevelNumber(i);

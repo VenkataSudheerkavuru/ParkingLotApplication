@@ -17,7 +17,7 @@ public class Spot {
 
     private String vehicleType;
 
-    private  boolean isAvailable;
+    private boolean isAvailable;
 
     private  LocalDateTime enteredTime;
 

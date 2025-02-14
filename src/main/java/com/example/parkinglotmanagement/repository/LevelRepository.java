@@ -7,6 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * level repository interface
+ */
 public interface LevelRepository extends JpaRepository<Level, Long> {
 
     @Query("select l from Level l where l.parkingLot.parkingLotId=:parkingLotId")

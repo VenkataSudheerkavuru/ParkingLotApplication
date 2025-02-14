@@ -4,50 +4,56 @@ import com.example.parkinglotmanagement.dto.VehicleDto;
 import com.example.parkinglotmanagement.entities.Spot;
 import com.example.parkinglotmanagement.entities.Vehicle;
 import com.example.parkinglotmanagement.exception.ParkingLotException;
-import com.example.parkinglotmanagement.repository.SpotRepository;
 import com.example.parkinglotmanagement.repository.VehicleRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * Dao class for vehicle
+ */
 @Component
 public class VehicleDao {
 
     private final VehicleRepository vehicleRepository;
-    private final SpotRepository spotRepository;
 
-    VehicleDao(VehicleRepository vehicleRepository, SpotRepository spotRepository) {
+    VehicleDao(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
-        this.spotRepository = spotRepository;
     }
 
-    public void saveVehicle(Spot spot, VehicleDto vehicleDto) {
-        Vehicle vehicle = new Vehicle();
+    /**
+     * saving the vehicle info in vehicle class along with spot occupied
+     */
+    public void saveVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle) {
+        if(vehicle == null) {
+            vehicle = new Vehicle();
+        }
         vehicle.setVehicleType(vehicleDto.getVehicleType());
         vehicle.setVehicleNumber(vehicleDto.getVehicleNumber());
+        vehicle.setVehicleEnteredTime(LocalDateTime.now());
+        vehicle.setVehicleLeftTime(null);
         vehicle.setSpot(spot);
         vehicleRepository.save(vehicle);
     }
 
+    /**
+     * getting the vehicle by using vehicle number
+     * @return vehicle if present in database
+     */
     public Vehicle findByVehicleNumber(String vehicleNumber) {
-        List<Vehicle> vehicleList = vehicleRepository.findVehicleByVehicleNumber(vehicleNumber);
-        if(vehicleList.isEmpty()){
-            throw new ParkingLotException("Vehicle not found");
+        Optional<Vehicle> vehicle = vehicleRepository.findVehicleByVehicleNumber(vehicleNumber);
+        if (vehicle.isPresent()) {
+            return vehicle.get();
         }
-        Vehicle vehicle = vehicleList.get(vehicleList.size()-1);
-        vehicleRepository.delete(vehicle);
-        return vehicle;
+        throw new ParkingLotException("Vehicle not found");
     }
 
-    public void makeSpotAvailable(Spot spot) {
-        spot.setAvailable(true);
-        spotRepository.save(spot);
-    }
-
-    public void checkVehicleNumber(String vehicleNumber) {
-        if(!vehicleRepository.findVehicleByVehicleNumber(vehicleNumber).isEmpty()) {
-            throw new ParkingLotException("Enter correct vehicle number");
-        };
+    /**
+     * check whether the vehicle object present in the vehicle table already or not
+     */
+    public Vehicle checkVehicleNumber(String vehicleNumber) {
+        Optional<Vehicle> vehicle = vehicleRepository.findVehicleByVehicleNumber(vehicleNumber);
+        return vehicle.orElse(null);
     }
 }

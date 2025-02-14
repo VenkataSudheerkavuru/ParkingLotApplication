@@ -7,8 +7,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * spot repository interface
+ */
 @Repository
 public interface SpotRepository extends JpaRepository<Spot, Long> {
 

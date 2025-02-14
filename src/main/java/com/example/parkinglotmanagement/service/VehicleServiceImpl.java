@@ -14,18 +14,27 @@ public class VehicleServiceImpl implements VehicleService {
         this.vehicleDao = vehicleDao;
     }
 
+    /**
+     * saving vehicle in database
+     */
     @Override
-    public void saveVehicle(Spot spot, VehicleDto vehicleDto) {
-        vehicleDao.saveVehicle(spot,vehicleDto);
+    public void saveVehicle(Spot spot, VehicleDto vehicleDto, Vehicle vehicle) {
+        vehicleDao.saveVehicle(spot,vehicleDto,vehicle);
     }
 
+    /**
+     * leave parking
+     */
     @Override
     public Vehicle leaveParking(String vehicleNumber) {
         return vehicleDao.findByVehicleNumber(vehicleNumber);
     }
 
+    /**
+     * check whether the vehicle object present in the vehicle table already or not
+     */
     @Override
-    public void checkVehicleNumber(VehicleDto vehicleDto) {
-        vehicleDao.checkVehicleNumber(vehicleDto.getVehicleNumber());
+    public Vehicle checkVehicleNumber(VehicleDto vehicleDto) {
+        return vehicleDao.checkVehicleNumber(vehicleDto.getVehicleNumber());
     }
 }

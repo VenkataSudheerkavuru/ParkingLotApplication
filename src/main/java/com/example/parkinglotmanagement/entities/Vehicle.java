@@ -4,6 +4,8 @@ package com.example.parkinglotmanagement.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 public class Vehicle {
@@ -15,7 +17,12 @@ public class Vehicle {
 
     private String vehicleType;
 
+    private LocalDateTime vehicleEnteredTime;
+
+    private LocalDateTime vehicleLeftTime;
+
     @OneToOne
     @JoinColumn(name = "spot_id")
     private Spot spot;
+
 }
