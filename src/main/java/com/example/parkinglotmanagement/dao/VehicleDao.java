@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static com.example.parkinglotmanagement.constants.AppConstants.*;
+
 /**
  * Dao class for vehicle
  */
@@ -47,7 +49,7 @@ public class VehicleDao {
         if (vehicle.isPresent() && vehicle.get().getIsParked()) {
             return vehicle.get();
         }
-        throw new ParkingLotException("Vehicle not found");
+        throw new ParkingLotException(VEHICLE_NOT_FOUND);
     }
 
     /**
@@ -57,7 +59,7 @@ public class VehicleDao {
         Optional<Vehicle> vehicle = vehicleRepository.findVehicleByVehicleNumber(vehicleNumber);
         if (vehicle.isPresent())
             if(vehicle.get().getIsParked()) {
-                throw new ParkingLotException("Please verify vehicle number");
+                throw new ParkingLotException(PLEASE_VERIFY_VEHICLE_NUMBER);
             }else{
                 return vehicle.get();
         }

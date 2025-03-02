@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.example.parkinglotmanagement.constants.AppConstants.*;
+
 /**
  * Dao operations for level class
  */
@@ -29,7 +31,7 @@ public class LevelDao {
         if (levelList != null && !levelList.isEmpty()) {
             return levelList;
         }
-        throw new ParkingLotException("No parking lot with given id.");
+        throw new ParkingLotException(NO_PARKING_LOT_WITH_GIVEN_ID);
     }
 
     /**

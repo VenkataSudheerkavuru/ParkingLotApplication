@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.parkinglotmanagement.constants.AppConstants.NO_AVAILABLE_SPOT_FOUND_FOR_THE_VEHICLE_TYPE;
+
 /**
  * Class contains all level service related functionalities
  */
@@ -66,7 +68,7 @@ public class LevelServiceImpl implements LevelService {
                 return;
             }
         }
-        throw new ParkingLotException("No available Spot found for the vehicle type " + vehicleType);
+        throw new ParkingLotException(NO_AVAILABLE_SPOT_FOUND_FOR_THE_VEHICLE_TYPE + vehicleType);
     }
 
     /**

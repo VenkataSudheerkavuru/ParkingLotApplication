@@ -23,9 +23,9 @@ public class GlobalExceptionHandler {
     /**
      * If any unhandled exception comes this method handles it
      */
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponse> handleException(Exception e) {
-//        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value() );
-//        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception e) {
+        ErrorResponse errorResponse = new ErrorResponse(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value() );
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

@@ -6,11 +6,14 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import static com.example.parkinglotmanagement.constants.AppConstants.*;
+
 /**
  * class which contains all logic related to calculations
  */
 @Service
 public class CalculateFeeImpl implements CalculateFee {
+
 
     /**
      * calculates fee based on the type and the duration of parking
@@ -30,9 +33,9 @@ public class CalculateFeeImpl implements CalculateFee {
      */
     private Double getParkingFee(String vehicleType) {
         return switch (vehicleType) {
-            case "CAR" -> ParkingFee.valueOf(ParkingFee.CAR.name()).getParkingFee();
-            case "TRUCK" -> ParkingFee.valueOf(ParkingFee.TRUCK.name()).getParkingFee();
-            case "BIKE" -> ParkingFee.valueOf(ParkingFee.BIKE.name()).getParkingFee();
+            case CAR -> ParkingFee.valueOf(ParkingFee.CAR.name()).getParkingFee();
+            case TRUCK -> ParkingFee.valueOf(ParkingFee.TRUCK.name()).getParkingFee();
+            case BIKE -> ParkingFee.valueOf(ParkingFee.BIKE.name()).getParkingFee();
             default -> 1.0;
         };
     }

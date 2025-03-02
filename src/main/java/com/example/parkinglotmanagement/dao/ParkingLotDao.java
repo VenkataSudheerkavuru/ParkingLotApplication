@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static com.example.parkinglotmanagement.constants.AppConstants.*;
+
 /**
  * Dao operations for parking lot class
  */
@@ -24,7 +26,7 @@ public class ParkingLotDao {
      */
     public void checkParkingLotName(String parkingLotName) {
         if (parkingLotRepository.findByParkingLotName(parkingLotName) != null) {
-            throw new ParkingLotException("Parking lot name already exists");
+            throw new ParkingLotException(PARKING_LOT_NAME_ALREADY_EXISTS);
         }
     }
 
